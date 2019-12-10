@@ -1,0 +1,71 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    background-color:#B24742;
+}
+
+header {
+    display:block;
+    position: relative;
+    width: 750px;
+    margin: auto;
+    text-align: center;
+}
+
+h1{
+    font-family: 'Fredoka One', cursive;
+    color: #EFBBB8;
+    font-size: 3em;
+}
+
+h3 {
+    font-family: 'Mansalva', cursive;
+    color: #EFBBB8
+}
+
+section.game-info {
+    position:absolute;
+    left: 5%;
+    top:15%;
+}
+
+button {
+    font-family: 'Mansalva', cursive;
+    font-size: 1em;
+    background-color: #DDCAA1;
+    color:#364156;
+    border: 3px solid #DDCAA1;
+    border-radius: 4px;
+
+}
+
+button:hover {
+    background-color: #EFBBB8;
+    border: 4px solid #DDCAA1;
+}
+
+section.game-holder {
+    display: block;
+    margin: 45px;
+    text-align: center;
+    position: relative;
+    max-width: 750px;
+    margin: auto;
+}
+
+div.card-holder {
+    display: inline-block;
+    position:relative;
+    margin: 7px;
+}
+
+img.card {
+    width: 150px;
+    height: 100px;
+    object-fit: cover;
+    border: 3px solid white;
+    border-radius: 3px;
+
+}

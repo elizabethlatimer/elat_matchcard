@@ -21,6 +21,8 @@ let deck = [
     {image: "images/panda.jpeg", card: "panda"}
 ]
 
+let currentScore = 0;
+let board = document.querySelector(".game-holder");
 
 
 function newGame(array) {
@@ -29,6 +31,9 @@ function newGame(array) {
 
     shuffleDeck(array);
     dealCards(array);
+    currentScore = 0;
+    document.getElementsByClassName("current-score")[0].innerText = " " +currentScore;
+
 }
 
 window.onload = function() {
@@ -36,6 +41,23 @@ window.onload = function() {
 
     let button = document.querySelector('#new-game');
     button.addEventListener("click", () => newGame(deck));
+
+    board.addEventListener("click", function(event) {
+        event.target.parentElement.parentElement.classList.toggle('flipped');
+        currentScore += 1
+        document.getElementsByClassName("current-score")[0].innerText = " " +currentScore;
+
+        let cardOne = "";
+        let cardTwo = "";
+
+        if (!cardOne) {
+            cardOne = event.target.getAttribute("data-card");
+        } else if (!cardTwo) {
+            cardTwo = event.target.getAttribute("data-card");
+        }
+
+
+    })
 }
 
 function shuffleDeck(array) {
@@ -48,7 +70,6 @@ function shuffleDeck(array) {
 }
 
 function dealCards(array) {
-    let board = document.querySelector(".game-holder");
 
     for (let i=0; i<array.length; i++) {
         //create the cards in the DOM
@@ -77,8 +98,6 @@ function dealCards(array) {
         card.appendChild(cardFront);
         cardHolder.appendChild(card);
         board.appendChild(cardHolder);
-
-
-        //set event listeners
     }
+
 }

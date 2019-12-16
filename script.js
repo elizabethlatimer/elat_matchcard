@@ -1,27 +1,28 @@
 let deck = [
-    {image: "images/alligator.jpg", card: "alligator"},
-    {image: "images/alligator.jpg", card: "alligator"},
-    {image: "images/bat.png", card: "bat"},
-    {image: "images/bat.png", card: "bat"},
-    {image: "images/duck.jpg", card: "duck"},
-    {image: "images/duck.jpg", card: "duck"},
-    {image: "images/fawn.jpg", card: "fawn"},
-    {image: "images/fawn.jpg", card: "fawn"},
-    {image: "images/fennec.jpg", card: "fennec"},
-    {image: "images/fennec.jpg", card: "fennec"},
-    {image: "images/giraffe.jpg", card: "giraffe"},
-    {image: "images/giraffe.jpg", card: "giraffe"},
-    {image: "images/owlette.jpg", card: "owl"},
-    {image: "images/owlette.jpg", card: "owl"},
-    {image: "images/seal.jpg", card: "seal"},
-    {image: "images/seal.jpg", card: "seal"},
-    {image: "images/sloth.jpg", card: "sloth"},
-    {image: "images/sloth.jpg", card: "sloth"},
-    {image: "images/panda.jpeg", card: "panda"},
-    {image: "images/panda.jpeg", card: "panda"}
+    {image: "images/0.jpg", card: "alligator"},
+    {image: "images/0.jpg", card: "alligator"},
+    {image: "images/1.png", card: "bat"},
+    {image: "images/1.png", card: "bat"},
+    {image: "images/2.jpg", card: "duck"},
+    {image: "images/2.jpg", card: "duck"},
+    {image: "images/3.jpg", card: "fawn"},
+    {image: "images/3.jpg", card: "fawn"},
+    {image: "images/4.jpg", card: "fennec"},
+    {image: "images/4.jpg", card: "fennec"},
+    {image: "images/5.jpg", card: "giraffe"},
+    {image: "images/5.jpg", card: "giraffe"},
+    {image: "images/6.jpg", card: "owl"},
+    {image: "images/6.jpg", card: "owl"},
+    {image: "images/8.jpg", card: "seal"},
+    {image: "images/8.jpg", card: "seal"},
+    {image: "images/9.jpg", card: "sloth"},
+    {image: "images/9.jpg", card: "sloth"},
+    {image: "images/7.jpeg", card: "panda"},
+    {image: "images/7.jpeg", card: "panda"}
 ]
 
 let currentScore = 0;
+let bestScore = localStorage.getItem("bestScore");
 let board = document.querySelector(".game-holder");
 
 
@@ -34,6 +35,8 @@ function newGame(array) {
     currentScore = 0;
     winCount = 0;
     document.getElementsByClassName("current-score")[0].innerText = " " +currentScore;
+    document.getElementsByClassName("best-score")[0].innerText = " " + bestScore;
+
 
 }
 
@@ -41,15 +44,14 @@ let cardOne = "";
 let cardTwo = "";
 let winCount = 0;
 
+
 window.onload = function() {
     newGame(deck);
-
     let button = document.querySelector('#new-game');
     button.addEventListener("click", () => newGame(deck));
 
     board.addEventListener("click", function(event) {
-        if (event.target.parentElement.parentElement.classList.contains("flipped")) {
-            console.log("same card");
+        if (event.target.parentElement.parentElement.classList.contains("flipped") || event.target.tagName != "IMG") {
             return;
         } else {
             event.target.parentElement.parentElement.classList.toggle('flipped');
@@ -76,13 +78,18 @@ window.onload = function() {
                         };
                         let winButton = document.querySelector('#new-game-win');
                         winButton.onclick = function() {
-                            newGame();
+                            newGame(deck);
                             winner.style.display = "none";
+                        }
+                        if (!bestScore || currentScore < bestScore) {
+                            localStorage.setItem("bestScore", currentScore);
+                            bestScore = localStorage.getItem("bestScore");
+                            document.getElementsByClassName("best-score")[0].innerText = " " + bestScore;
                         }
                     }
                 } else {
                     board.style.pointerEvents = "none";
-                    window.setTimeout(noMatch, 1000, event);
+                    window.setTimeout(noMatch, 1000);
                 }
             }
         }
@@ -132,7 +139,7 @@ function dealCards(array) {
 
 }
 
-function noMatch(event) {
+function noMatch() {
     cardOne.classList.toggle('flipped');
     cardTwo.classList.toggle("flipped");
     cardOne="";

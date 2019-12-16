@@ -12,6 +12,7 @@ header {
     width: 750px;
     margin: auto;
     text-align: center;
+    text-shadow: #364156 5px 5px 10px;
 }
 
 h1{
@@ -36,14 +37,29 @@ button {
 
 }
 
-.game-info button {
-    position:relative;
+button:hover {
+    background-color: #364156;
+    border: 3px solid #364156;
+    color: #DDCAA1;
+    cursor: pointer;
+    transition-duration: 0.4s;
 }
 
-button:hover {
-    background-color: #EFBBB8;
-    border: 4px solid #DDCAA1;
+button#new-game-win {
+    font-family: 'Mansalva', cursive;
+    font-size: 1em;
+    position:relative;
+    background-color: #364156;
+    color: #DDCAA1;
+    border: 6px solid #364156;
+}
+
+button#new-game-win:hover {
+    background-color: #B24742;
+    cursor: pointer;
     transition-duration: 0.4s;
+    border: 6px solid #B24742;
+
 }
 
 section.game-holder {
@@ -58,24 +74,21 @@ section.game-holder {
 section.game-info {
     display: block;
     position: relative;
-    height: 60px;
+    padding: 15px;
     background-color: rgba(54, 65, 86, .5);
+    border: 3px solid #212d40;
+    border-radius: 5px;
+    margin-top: 10px;
 }
 
 .scores {
-    display:inline-block;
-    /* width: 80%;
-    margin: auto; */
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    left: 50%;
-    transform: translateX(-50%);
+    display:flex;
+    width: 100%;
+    justify-content: space-around;    
 }
 
 .scores div {
     display: inline-block;
-    width: 300px;
     text-align: center;
 }
 
@@ -113,28 +126,33 @@ img {
   z-index: 2;
 }
 
-.win h3, .win p {
+.win h3 {
+    color: #212d40;
+    font-size: 45px;
+}
+.win p {
     color: #212d40;
     font-size: 30px;
 }
 
 .win div {
-    margin-top:35px;
+    margin: 40px;
     
 }
 
 .win-alert {
-    display: none;
+    display:none;
     position: fixed;
     z-index: 1;
     width: 600px;
-    height: 400px;
+    height: 300px;
     left: 50%;
     transform: translate(-50%, 0);
     background-color: #efbbb8;
     border: 15px solid #364156;
     border-radius: 5px;
     text-align: center;
+    top:190px;
 }
 
 .close {
@@ -144,9 +162,11 @@ img {
     font-weight: bold;
     margin-right: 10px;
 }
+.close:hover {
+    cursor: pointer;
+}
 
 .alert-content {
     display: block;
     position:relative;
-
 }

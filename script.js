@@ -1,4 +1,4 @@
-let deck = [
+const deck = [
     {image: "images/0.jpg", card: "alligator"},
     {image: "images/0.jpg", card: "alligator"},
     {image: "images/1.png", card: "bat"},
@@ -24,22 +24,6 @@ let deck = [
 let currentScore = 0;
 let bestScore = localStorage.getItem("bestScore");
 let board = document.querySelector(".game-holder");
-
-
-function newGame(array) {
-    let board = document.querySelector(".game-holder");
-    board.innerHTML = "";
-
-    shuffleDeck(array);
-    dealCards(array);
-    currentScore = 0;
-    winCount = 0;
-    document.getElementsByClassName("current-score")[0].innerText = " " +currentScore;
-    document.getElementsByClassName("best-score")[0].innerText = " " + bestScore;
-
-
-}
-
 let cardOne = "";
 let cardTwo = "";
 let winCount = 0;
@@ -51,17 +35,18 @@ window.onload = function() {
     button.addEventListener("click", () => newGame(deck));
 
     board.addEventListener("click", function(event) {
-        if (event.target.parentElement.parentElement.classList.contains("flipped") || event.target.tagName != "IMG") {
+        let activeCard = event.target.parentElement.parentElement;
+        if (activeCard.classList.contains("flipped") || event.target.tagName != "IMG") { //insure clicks only register on unflipped cards, not other child elements
             return;
         } else {
-            event.target.parentElement.parentElement.classList.toggle('flipped');
+            activeCard.classList.toggle('flipped');
             currentScore += 1
             document.getElementsByClassName("current-score")[0].innerText = " " +currentScore;
 
             if (!cardOne) {
-                cardOne = event.target.parentElement.parentElement;
+                cardOne = activeCard;
             } else {
-                cardTwo = event.target.parentElement.parentElement;
+                cardTwo = activeCard;
                 if (cardOne.getAttribute("data-card") == cardTwo.getAttribute("data-card")) {
                     winCount += 1;
                     cardOne="";
@@ -69,17 +54,17 @@ window.onload = function() {
                     if (winCount == 10) {
                         let close = document.getElementsByClassName("close")[0];
 
-                        let winner = document.querySelector(".win-alert");
+                        let winAlert = document.querySelector(".win-alert");
 
-                        winner.style.display = "block";
+                        winAlert.style.display = "block";
 
                         close.onclick = function() {
-                            winner.style.display = "none";
+                            winAlert.style.display = "none";
                         };
-                        let winButton = document.querySelector('#new-game-win');
-                        winButton.onclick = function() {
+                        let winNewGameButton = document.querySelector('#new-game-win');
+                        winNewGameButton.onclick = function() {
                             newGame(deck);
-                            winner.style.display = "none";
+                            winAlert.style.display = "none";
                         }
                         if (!bestScore || currentScore < bestScore) {
                             localStorage.setItem("bestScore", currentScore);
@@ -97,19 +82,29 @@ window.onload = function() {
     })
 }
 
+function newGame(array) {
+    let board = document.querySelector(".game-holder");
+    board.innerHTML = "";
+
+    shuffleDeck(array);
+    dealCards(array);
+    currentScore = 0;
+    winCount = 0;
+    document.getElementsByClassName("current-score")[0].innerText = " " +currentScore;
+    document.getElementsByClassName("best-score")[0].innerText = " " + bestScore;
+}
+
 function shuffleDeck(array) {
     for(let i = array.length-1; i > 0; i--){
         const j = Math.floor(Math.random() * i)
         const temp = array[i]
         array[i] = array[j]
         array[j] = temp
-      }
+    }
 }
 
 function dealCards(array) {
-
     for (let i=0; i<array.length; i++) {
-        //create the cards in the DOM
         let frontFace = document.createElement("img");
         frontFace.src = array[i]["image"] 
 
@@ -136,7 +131,6 @@ function dealCards(array) {
         cardHolder.appendChild(card);
         board.appendChild(cardHolder);
     }
-
 }
 
 function noMatch() {
@@ -145,5 +139,4 @@ function noMatch() {
     cardOne="";
     cardTwo="";
     board.style.pointerEvents = "auto";
-
 }

@@ -81,6 +81,7 @@ window.onload = function() {
                         }
                     }
                 } else {
+                    board.style.pointerEvents = "none";
                     window.setTimeout(noMatch, 1000, event);
                 }
             }
@@ -136,4 +137,6 @@ function noMatch(event) {
     cardTwo.classList.toggle("flipped");
     cardOne="";
     cardTwo="";
+    board.style.pointerEvents = "auto";
+
 }

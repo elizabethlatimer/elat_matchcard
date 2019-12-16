@@ -20,7 +20,7 @@ h1{
     font-size: 3em;
 }
 
-h3, p {
+h3, p, span {
     font-family: 'Mansalva', cursive;
     color: #EFBBB8;
     display: inline
@@ -57,12 +57,6 @@ section.game-holder {
     margin: auto;
 }
 
-/* div.card-holder {
-    display: inline-block;
-    position:relative;
-    margin: 7px;
-} */
-
 img {
     width: 150px;
     height: 100px;
@@ -89,10 +83,48 @@ img {
   cursor: pointer;
   position: absolute;
   box-sizing: border-box;
-  backface-visibility: hidden;  /* W3C */
+  backface-visibility: hidden; 
 }
 
 .flipCard .card .back {
   transform:rotatey(-180deg);
   z-index: 2;
+}
+
+.win h3, .win p {
+    color: #212d40;
+    font-size: 30px;
+}
+
+.win div {
+    margin-top:35px;
+    
+}
+
+.win-alert {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    width: 600px;
+    height: 400px;
+    left: 50%;
+    transform: translate(-50%, 0);
+    background-color: #efbbb8;
+    border: 15px solid #364156;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.close {
+    float:right;
+    color: #212d40;
+    font-size: 35px;
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.alert-content {
+    display: block;
+    position:relative;
+
 }

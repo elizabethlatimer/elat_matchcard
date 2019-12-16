@@ -32,9 +32,14 @@ function newGame(array) {
     shuffleDeck(array);
     dealCards(array);
     currentScore = 0;
+    winCount = 0;
     document.getElementsByClassName("current-score")[0].innerText = " " +currentScore;
 
 }
+
+let cardOne = "";
+let cardTwo = "";
+let winCount = 0;
 
 window.onload = function() {
     newGame(deck);
@@ -43,19 +48,43 @@ window.onload = function() {
     button.addEventListener("click", () => newGame(deck));
 
     board.addEventListener("click", function(event) {
-        event.target.parentElement.parentElement.classList.toggle('flipped');
-        currentScore += 1
-        document.getElementsByClassName("current-score")[0].innerText = " " +currentScore;
+        if (event.target.parentElement.parentElement.classList.contains("flipped")) {
+            console.log("same card");
+            return;
+        } else {
+            event.target.parentElement.parentElement.classList.toggle('flipped');
+            currentScore += 1
+            document.getElementsByClassName("current-score")[0].innerText = " " +currentScore;
 
-        let cardOne = "";
-        let cardTwo = "";
+            if (!cardOne) {
+                cardOne = event.target.parentElement.parentElement;
+            } else {
+                cardTwo = event.target.parentElement.parentElement;
+                if (cardOne.getAttribute("data-card") == cardTwo.getAttribute("data-card")) {
+                    winCount += 1;
+                    cardOne="";
+                    cardTwo="";
+                    if (winCount == 10) {
+                        let close = document.getElementsByClassName("close")[0];
 
-        if (!cardOne) {
-            cardOne = event.target.getAttribute("data-card");
-        } else if (!cardTwo) {
-            cardTwo = event.target.getAttribute("data-card");
+                        let winner = document.querySelector(".win-alert");
+
+                        winner.style.display = "block";
+
+                        close.onclick = function() {
+                            winner.style.display = "none";
+                        };
+                        let winButton = document.querySelector('#new-game-win');
+                        winButton.onclick = function() {
+                            newGame();
+                            winner.style.display = "none";
+                        }
+                    }
+                } else {
+                    window.setTimeout(noMatch, 1000, event);
+                }
+            }
         }
-
 
     })
 }
@@ -100,4 +129,11 @@ function dealCards(array) {
         board.appendChild(cardHolder);
     }
 
+}
+
+function noMatch(event) {
+    cardOne.classList.toggle('flipped');
+    cardTwo.classList.toggle("flipped");
+    cardOne="";
+    cardTwo="";
 }

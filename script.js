@@ -22,7 +22,7 @@ const deck = [
 ]
 
 let currentScore = 0;
-let bestScore = localStorage.getItem("bestScore");
+let bestScore = localStorage.getItem("bestScore") || ""
 let board = document.querySelector(".game-holder");
 let cardOne = "";
 let cardTwo = "";
